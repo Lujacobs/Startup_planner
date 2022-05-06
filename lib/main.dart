@@ -60,8 +60,25 @@ class _RandomWordsState extends State<RandomWords> {
           // #enddocregion listTile
         },
       ),
-      // #enddocregion itemBuilder
-    );
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.event),
+            label: 'Agenda Feed',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'Groups',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
+          ),],
+        selectedItemColor: Colors.deepPurpleAccent,
+      ),
+
+
+      );
   }
 // #enddocregion RWS-build
 // #docregion RWS-var
