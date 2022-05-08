@@ -82,8 +82,12 @@ class MyApp extends StatelessWidget {
 rowWidget( DateTime date, String title, bool present){
   return Row(
     children:  <Widget>[
+
       Expanded(
-        child: Text(date.toString(),  textAlign: TextAlign.center),
+        child: Column( children : [
+          Icon(Icons.date_range, color: Colors.grey),
+          Text(date.toString(),  textAlign: TextAlign.center,),]
+        )
       ),
       Expanded(
         child: Text(title,  textAlign: TextAlign.center),
