@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// import 'dart:ffi';
+import 'dart:html';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
@@ -13,81 +16,95 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // #docregion build
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Startup Name Generator',
-      home: RandomWords(),
+    return MaterialApp(
+        title: 'Startup agenda',
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Startup agenda interface'),
+          ),
+          // #docregion itemBuilder
+          body: ListView(
+            // This next line does the trick.
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              rowWidget(DateTime.utc(2022,2,2), 'Meeting Met de boys', true),
+              rowWidget(DateTime.utc(2022,2,2), 'Meeting Met de Merte', true),
+              Container(
+                height: 160.0,
+                width: 160.0,
+                color: Colors.red,
+              ),
+              Container(
+                height: 160.0,
+                width: 160.0,
+                color: Colors.blue,
+              ),
+              Container(
+                height: 160.0,
+                width: 160.0,
+                color: Colors.green,
+              ),
+              Container(
+                height: 160.0,
+                width: 160.0,
+                color: Colors.yellow,
+              ),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.event),
+                label: 'Agenda Feed',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.group),
+                label: 'Groups',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+            selectedItemColor: Colors.deepPurpleAccent,
+          ),
+
+
+          ),
     );
-  }
-// #enddocregion build
-}
-// #enddocregion MyApp
-
-// #docregion RWS-var
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  final _saved = <WordPair>[];
-
-  // #enddocregion RWS-var
-
-  // #docregion RWS-build
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Startup Name Generator'),
-      ),
-      // #docregion itemBuilder
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return const Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          // #docregion listTile
-          return ListTile(
-            title: Text(
-              _suggestions[index].asPascalCase,
-              style: _biggerFont,
-            ),
-          );
-          // #enddocregion listTile
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: 'Agenda Feed',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-          ),],
-        selectedItemColor: Colors.deepPurpleAccent,
-      ),
-
-
-      );
   }
 // #enddocregion RWS-build
 // #docregion RWS-var
 }
-// #enddocregion RWS-var
+// widget that is custom based on Time and name
+rowWidget( DateTime date, String title, bool present){
+  return Row(
+    children:  <Widget>[
+      Expanded(
+        child: Text(date.toString(),  textAlign: TextAlign.center),
+      ),
+      Expanded(
+        child: Text(title,  textAlign: TextAlign.center),
+      ),
+      Expanded(
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Icon(Icons.task_alt, color: Colors.green),
+          ),
+        ),
 
-class RandomWords extends StatefulWidget {
-  const RandomWords({Key? key}) : super(key: key);
+      // if(present){
+      //   return Icon(Icons.task_alt),
+      // }else{
+      //   return Icon(Icons.task_alt),
+      // }
 
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
+    ],
+
+  );
+
 }
+
+
