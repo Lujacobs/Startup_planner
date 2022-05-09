@@ -6,14 +6,25 @@
 import 'dart:html';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
+  var data = readJson();
   runApp(const MyApp());
+}
+ // https://www.kindacode.com/article/how-to-read-local-json-files-in-flutter/
+
+Future<void> readJson() async {
+  final String response = await rootBundle.loadString('assets/Events.json');
+  final data = await json.decode(response);
+  return data;
 }
 
 // #docregion MyApp
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +39,7 @@ class MyApp extends StatelessWidget {
             // This next line does the trick.
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              rowWidget(DateTime.utc(2022,2,2), 'Meeting Met de boys', true),
+              rowWidget(DateTime.utc(2022,2,2), "title", true),// data[1]["title"], true),
               rowWidget(DateTime.utc(2022,2,2), 'Meeting Met de Merte', true),
               Container(
                 height: 160.0,
