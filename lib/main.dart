@@ -4,7 +4,6 @@
 
 // import 'dart:ffi';
 import 'dart:html';
-
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
@@ -110,5 +109,7 @@ rowWidget( DateTime date, String title, bool present){
   );
 
 }
+
+// temp loader for a file <- will be moved server side in the futer
 
 
